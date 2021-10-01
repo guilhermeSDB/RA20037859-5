@@ -52,8 +52,8 @@ require "controller/alunos_controller.php";
 
     form.appendChild(button)
 
-    console.log(form)
-  } 
+    console.log(id)
+    } 
 
   
 
