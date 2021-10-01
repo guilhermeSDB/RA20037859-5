@@ -1,6 +1,7 @@
 <?php 
 
 class Students {
+    private $id = null;
     private $name = null;
     private $email = null;
     private $password = null;

@@ -74,7 +74,12 @@ require "controller/courses_controller.php";
                     <td><?= $course->id ?></td>                    
                     <td><?= $course->nameCourse ?></td>
                     <td><?= $course->description ?></td>
-                    <td><?= $course->status ?></td>                    
+                    <td><?php if($course->status == '1'){
+                            echo "Ativo";
+                          }
+                          else{
+                            echo "Inativo";
+                          }?></td>                    
                     <td>
                       <button type="button" class="btn btn-info">Visualizar</button>
                       <button type="button" class="btn btn-warning">Editar</button>

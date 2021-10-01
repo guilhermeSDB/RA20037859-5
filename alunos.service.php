@@ -33,9 +33,7 @@ class alunoService{
         ORDER BY t.id ASC';    
         $stmt = $this->conexao->prepare($query);        
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
-
-        
+        return $stmt->fetchAll(PDO::FETCH_OBJ);        
 
     }
 
@@ -46,12 +44,29 @@ class alunoService{
         return $stmt->fetchAll(PDO::FETCH_OBJ);        
     }
 
-    public function atualizar(){ // UPDATE
-        
+    public function getRowsNumber() {
+        $sql = "SELECT COUNT(*) FROM students";
+        $stmt = $this->conexao->query($sql);
+        $count = $stmt->fetchColumn();
+        return $count;
     }
 
-    public function remover(){ // DELETE
+    /*
+    public function atualizar(){ // UPDATE
+        $query = "UPDATE students SET nome = ? where id = ?";
+        $stmt = $this->conexao->prepare($query);
+        $stmt = $this->bindValue(1, $this->student->__get('nome'));
         
+    }
+    */
+
+    public function remover(){ // DELETE
+
+        $query = 'DELETE FROM students where id = :id';
+        $stmt = $this->conexao->prepare($query);
+        $stmt->bindValue(':id', $this->student->__get('id'));
+        echo $this->student->__get('id');
+        $stmt->execute();        
     }
 }
 

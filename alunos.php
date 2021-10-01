@@ -30,14 +30,31 @@ var_dump(trazerCurso());
 
   <?php include("pages/imports.php");?>
 
+<script>
+  function editar(id){
+    //criar um form de edição
+    let form = document.createElement('form')
+
+    //criar um input para entrada do texto
+    let inputTarefa = document.createElement('input')
+
+    //criar um button para envio do form
+    let inputTarefa = document.createElement('button')
+  } 
+
+  function remover(id){
+      location.href = 'alunos.php?acao=remover&id='+id;
+  }
+</script>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
   <!-- Preloader -->
-  <!-- <div class="preloader flex-column justify-content-center align-items-center">
+   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div> -->
+  </div>
 
   <?php include("pages/menu-navbar.php");?>
 
@@ -112,8 +129,8 @@ var_dump(trazerCurso());
                         </td>
                         <td>
                           <button type="button" class="btn btn-info">Visualizar</button>
-                          <button type="button" class="btn btn-warning">Editar</button>
-                          <button type="button" class="btn btn-danger">Excluir</button>
+                          <button type="button" class="btn btn-warning" onclick="editar(<?= $student->id ?>)">Editar</button>
+                          <button type="button" class="btn btn-danger" onclick="remover(<?= $student->id ?>)">Excluir</button>
                         </td>
                       </tr>
                     </tbody>
@@ -155,7 +172,7 @@ var_dump(trazerCurso());
     <div class="modal-content">
       <form action="controller/alunos_controller.php?acao=inserir" method="POST">
         <div class="modal-header">        
-            <h5 class="modal-title" id="exampleModalLabel">Adiconar Curso</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Adicionar Aluno</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -212,6 +229,7 @@ var_dump(trazerCurso());
   </div>
 </div>
 
+
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
@@ -219,6 +237,8 @@ var_dump(trazerCurso());
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
@@ -231,11 +251,20 @@ var_dump(trazerCurso());
   <?php if(isset($_GET['inclusao'])){
     echo "
     Swal.fire({
-    icon: 'success',
-    title: 'Sucesso!',
-    text: 'Salvo com sucesso!'
+    icon: 'sucess',
+    title: 'Salvo com sucesso',
+    text: 'Foi salvo'
     })";
-  } ?>    
+  }else if(isset($_GET['remover'])){
+    echo "
+    Swal.fire({
+    icon: 'sucess',
+    title: 'Removido com sucesso',
+    text: 'Removido'
+    })";
+  }
+
+  ?>
 </script>
 
 
