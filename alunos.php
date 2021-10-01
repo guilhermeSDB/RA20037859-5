@@ -1,13 +1,23 @@
 <?php
 
-include 'conn.php';
+$acao = 'recuperar';
+require "controller/alunos_controller.php";
 
-function trazerDados(){
-    $select = "SELECT id,nameCourse FROM courses";
-    $result = $conn->query($select);
-    return $result;
+
+/*function trazerCurso(){
+  $query = 'SELECT nameCourse FROM courses';
+  $conexao = $conexao = new Conexao();
+  $conexao = $conexao->conectar();
+  $resultado = $conexao->query($query);
+  return $conexao;  
+  
 }
 
+var_dump(trazerCurso());  
+
+*/
+
+//var_dump($studentss); 
 
 ?>
 
@@ -16,7 +26,7 @@ function trazerDados(){
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Painel ADM | Alunos</title>
+  <title>Painel ADM | Alunos</title> 
 
   <?php include("pages/imports.php");?>
 
@@ -57,8 +67,17 @@ function trazerDados(){
           <div class="col-12">                   
           <div class="card">
           <div class="card-header d-md-flex justify-content-md-end">
-            <button type="button" class="btn btn-flat btn-info" data-toggle="modal" data-target="#exampleModal">Novo Curso</button>
+            <button type="button" class="btn btn-flat btn-info" data-toggle="modal" data-target="#exampleModal">Novo Aluno</button>
           </div> 
+
+          <!--<?php if( isset($_GET['inclusao']) && $_GET['inclusao'] == 1) { ?>
+            <div class="bg-success pt-2 text-white d-flex justify-content-center">
+              <h5>Aluno inserido com sucesso!</h5>
+            </div>
+          <?php } ?>
+          ------->
+
+
               <!-- /.card-header -->
               <div class="card-body">                
                 <table id="example2" class="table table-bordered table-hover">
@@ -73,21 +92,34 @@ function trazerDados(){
                     <th>Ação</th>
                   </tr>
                   </thead>
-                  <tbody>                  
-                  <tr>
-                    <td>1</td>
-                    <td>Guilherme Barros</td>
-                    <td>Guilherme@hotmail.com</td>
-                    <td>(18)99629-1817</td>
-                    <td>Administração</td>
-                    <td>Ativo</td>
-                    <td>
-                      <button type="button" class="btn btn-info">Visualizar</button>
-                      <button type="button" class="btn btn-warning">Editar</button>
-                      <button type="button" class="btn btn-danger">Excluir</button>
-                    </td>
-                  </tr>
-                  </tbody>
+
+                  <?php foreach($students as $indice => $student) { ?>
+
+                    <tbody>                  
+                      <tr>
+                        <td><?= $student->id ?></td>
+                        <td><?= $student->name ?></td>
+                        <td><?= $student->email ?></td>
+                        <td><?= $student->phone ?></td>
+                        <td><?= $student->nameCourse ?></td>
+                        <td>
+                          <?php if($student->status == '1'){
+                            echo "Ativo";
+                          }
+                          else{
+                            echo "Inativo";
+                          }?>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-info">Visualizar</button>
+                          <button type="button" class="btn btn-warning">Editar</button>
+                          <button type="button" class="btn btn-danger">Excluir</button>
+                        </td>
+                      </tr>
+                    </tbody>
+
+                  <?php } ?>
+
                   <tfoot>
                   <tr>
                   <th>ID</th>
@@ -121,7 +153,7 @@ function trazerDados(){
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form action="courses_exec.php" method="POST">
+      <form action="controller/alunos_controller.php?acao=inserir" method="POST">
         <div class="modal-header">        
             <h5 class="modal-title" id="exampleModalLabel">Adiconar Curso</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -143,30 +175,33 @@ function trazerDados(){
                   <input name="senha" type="password" class="form-control" id="senha" placeholder="Digite a senha do Aluno">
                 </div>
                 <div class="form-group col-md-6">
-                <label for="senha">Confirmar Senha</label>
-                  <input name="senha" type="password" class="form-control" id="senha" placeholder="Confirme a senha do Aluno">
+                  <label for="senha">Confirmar Senha</label>
+                  <input type="password" class="form-control" id="senha" placeholder="Confirme a senha do Aluno">
+                </div>
+                <div class="form-group col-md-12">
+                <label for="telefone">Telefone</label>
+                  <input name="telefone" type="number" class="form-control" id="telefone" placeholder="Ex: (19) 99999-9999">
                 </div>
               </div>              
               <div class="form-group">
-            <label>Selecione o Curso</label>
-              <select name="curso" class="form-control">
-              <?php 
-                            
-              $resultado = trazerDados();
-              $row = $resultado->fetch_row();
-              if($row[0] == null){
-                echo '';
-              }else{
-                while($i = $resultado->fetch_assoc){
-                  echo "<option value='$resultado[id]'>$resultado[nameCourse]</option>";
-                }
+                <label>Selecione o Curso</label>
+                <select name="curso" class="form-control">                 
                 
-              }              
-              
-              ?>
-                <option value="1">Administração</option>
-              </select>
-            </div>        
+                <?php foreach($studentss as $indice => $student) { ?>   
+
+                    <option value="<?= $student->id ?>"><?= $student->nameCourse ?></option>   
+
+                <?php } ?>
+
+                 </select>
+              </div>   
+              <div class="form-group">
+              <label>Selecione o Status</label>
+                <select name="status" class="form-control">
+                  <option value="1">Ativo</option>
+                  <option value="0">Inativo</option>
+                </select>
+            </div>     
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -184,12 +219,26 @@ function trazerDados(){
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
+
+<script>
+  <?php if(isset($_GET['inclusao'])){
+    echo "
+    Swal.fire({
+    icon: 'success',
+    title: 'Sucesso!',
+    text: 'Salvo com sucesso!'
+    })";
+  } ?>    
+</script>
+
+
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>

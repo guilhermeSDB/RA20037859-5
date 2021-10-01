@@ -1,5 +1,14 @@
+<?php
+
+$acao = 'recuperar';
+require "controller/courses_controller.php";
+
+//var_dump($courses)
+
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,12 +66,15 @@
                     <th>Ação</th>
                   </tr>
                   </thead>
+
+                  <?php foreach($courses as $indice => $course) { ?>
+
                   <tbody>                  
                   <tr>
-                    <td>1</td>                    
-                    <td>Administração</td>
-                    <td>Curso de Administração</td>
-                    <td>Ativo</td>                    
+                    <td><?= $course->id ?></td>                    
+                    <td><?= $course->nameCourse ?></td>
+                    <td><?= $course->description ?></td>
+                    <td><?= $course->status ?></td>                    
                     <td>
                       <button type="button" class="btn btn-info">Visualizar</button>
                       <button type="button" class="btn btn-warning">Editar</button>
@@ -70,6 +82,9 @@
                     </td>
                   </tr>
                   </tbody>
+
+                  <?php } ?>
+
                   <tfoot>
                   <tr>
                     <th>ID</th>
@@ -100,7 +115,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form action="courses_exec.php" method="POST">
+      <form action="controller/courses_controller.php?acao=inserir" method="POST">
         <div class="modal-header">        
             <h5 class="modal-title" id="exampleModalLabel">Adiconar Curso</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
