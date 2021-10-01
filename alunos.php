@@ -3,20 +3,6 @@
 $acao = 'recuperar';
 require "controller/alunos_controller.php";
 
-
-/*function trazerCurso(){
-  $query = 'SELECT nameCourse FROM courses';
-  $conexao = $conexao = new Conexao();
-  $conexao = $conexao->conectar();
-  $resultado = $conexao->query($query);
-  return $conexao;  
-  
-}
-
-var_dump(trazerCurso());  
-
-*/
-
 //var_dump($studentss); 
 
 ?>
@@ -31,20 +17,46 @@ var_dump(trazerCurso());
   <?php include("pages/imports.php");?>
 
 <script>
-  function editar(id){
-    //criar um form de edição
-    let form = document.createElement('form')
-
-    //criar um input para entrada do texto
-    let inputTarefa = document.createElement('input')
-
-    //criar um button para envio do form
-    let inputTarefa = document.createElement('button')
-  } 
 
   function remover(id){
       location.href = 'alunos.php?acao=remover&id='+id;
   }
+
+  
+  function editar(id){
+    $("#exampleModal").modal({
+    show: true
+    });
+
+    document.getElementById("button-action").textContent="Atualizar";
+    document.getElementById("exampleModalLabel").textContent="Editar Aluno";
+    
+    //criar um form de edição
+    let form = document.createElement('form')
+    form.action = '#'
+    form.method = 'post'
+
+    //criar um input para entrada do texto
+    let inputStudent = document.createElement('input')
+    inputStudent.type='text'
+    inputStudent.name='student'
+
+    //criar um button para envio do form
+    let button = document.createElement('button')
+    button.type = 'submit'
+    button.className = 'btn btn-info'
+    button.innerHTML = 'Atualizar'
+
+    //incluir inputStudent no form
+    form.appendChild(inputStudent)
+
+    form.appendChild(button)
+
+    console.log(form)
+  } 
+
+  
+
 </script>
 
 </head>
@@ -204,9 +216,9 @@ var_dump(trazerCurso());
                 <label>Selecione o Curso</label>
                 <select name="curso" class="form-control">                 
                 
-                <?php foreach($studentss as $indice => $student) { ?>   
+                <?php foreach($cursos as $indice => $curso) { ?>   
 
-                    <option value="<?= $student->id ?>"><?= $student->nameCourse ?></option>   
+                    <option value="<?= $curso->id ?>"><?= $curso->nameCourse ?></option>   
 
                 <?php } ?>
 
@@ -221,8 +233,8 @@ var_dump(trazerCurso());
             </div>     
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-success">Salvar</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>            
+            <button id="button-action" type="submit" class="btn btn-success">Salvar</button>
         </div>
       </form>
     </div>
@@ -251,14 +263,14 @@ var_dump(trazerCurso());
   <?php if(isset($_GET['inclusao'])){
     echo "
     Swal.fire({
-    icon: 'sucess',
+    icon: 'success',
     title: 'Salvo com sucesso',
     text: 'Foi salvo'
     })";
   }else if(isset($_GET['remover'])){
     echo "
     Swal.fire({
-    icon: 'sucess',
+    icon: 'success',
     title: 'Removido com sucesso',
     text: 'Removido'
     })";

@@ -44,7 +44,7 @@ class alunoService{
         return $stmt->fetchAll(PDO::FETCH_OBJ);        
     }
 
-    public function getRowsNumber() {
+    public function recuperarRowsAlunos() {
         $sql = "SELECT COUNT(*) FROM students";
         $stmt = $this->conexao->query($sql);
         $count = $stmt->fetchColumn();
@@ -61,7 +61,6 @@ class alunoService{
     */
 
     public function remover(){ // DELETE
-
         $query = 'DELETE FROM students where id = :id';
         $stmt = $this->conexao->prepare($query);
         $stmt->bindValue(':id', $this->student->__get('id'));

@@ -1,7 +1,7 @@
 <?php
 
-$acao = null;
-require "alunos.service.php";
+$acao = "recuperar";
+require "controller/alunos_controller.php";
 
 ?>
 
@@ -82,7 +82,7 @@ require "alunos.service.php";
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3><?php echo getRowsNumber() ?></h3>
+                <h3><?= $rowsNumber ?></h3>
 
                 <p>Estudantes Cadastrados</p>
               </div>
