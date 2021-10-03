@@ -105,7 +105,7 @@ require "controller/alunos_controller.php";
                             </td>
                             <td>
                               <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalVisualizar<?= $student->id ?>">Visualizar</button>
-                              <button type="button" class="btn btn-warning" onclick="editar(<?= $student->id ?>)">Editar</button>
+                              <button type="button" class="btn btn-warning" onclick="editar(<?= $student->id ?>, '<?= $student->name ?>','<?= $student->email?>','<?=$student->password?>','<?=$student->phone?>','<?=$student->nameCourse?>',<?=$student->status?>)">Editar</button>
                               <button type="button" class="btn btn-danger" onclick="remover(<?= $student->id ?>)">Excluir</button>
                             </td>
                           </tr>
@@ -292,7 +292,7 @@ require "controller/alunos_controller.php";
       location.href = 'alunos.php?acao=remover&id=' + id;
     }
 
-    function editar(id) {
+    function editar(id,name,email,password,phone,status,created_at) {
       $("#exampleModal").modal({
         show: true
       });
@@ -302,12 +302,13 @@ require "controller/alunos_controller.php";
       $("#modal-color").removeClass("bg-info");
       $("#modal-color").addClass("bg-warning");
       $('#formId').attr('action', 'controller/alunos_controller.php?acao=atualizar');
+      $('#formId').attr('method', 'POST');
       $("#id").attr('value', +id)
-      $("#nome").attr('value', '<?= $student->name ?>')
-      $("#email").attr('value', '<?= $student->email ?>')
-      $("#senha").attr('value', '<?= $student->password ?>')
-      $("#telefone").attr('value', '<?= $student->phone ?>')
-      $("#status").attr('value', '<?= $student->status ?>')
+      $("#nome").attr('value', name )
+      $("#email").attr('value', email)
+      $("#senha").attr('value', password)
+      $("#telefone").attr('value', +phone)
+      $("#status").attr('value', +status)
     }
 
     $("#novoAluno").click(function() {

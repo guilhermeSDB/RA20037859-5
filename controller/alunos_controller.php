@@ -45,21 +45,22 @@ if( $acao == 'inserir'){
     require "../models/Students.php";
     require "../alunos.service.php";
 
-    $student = new Students();
+    $students = new Students();   
+
+    $students->__set('id', $_POST['id']);
+    $students->__set('name', $_POST['nome']);    
+    $students->__set('email', $_POST['email']);    
+    $students->__set('password', $_POST['senha']);    
+    $students->__set('phone', $_POST['telefone']);  
+    $students->__set('course', $_POST['curso']);    
+    $students->__set('status', $_POST['status']);   
+
     $conexao = new conexao();
 
-    $student->__set('id', $_POST['id']);
-    $student->__set('name', $_POST['nome']);    
-    $student->__set('email', $_POST['email']);    
-    $student->__set('password', $_POST['senha']);    
-    $student->__set('phone', $_POST['telefone']);  
-    $student->__set('course', $_POST['curso']);    
-    $student->__set('status', $_POST['status']);    
-
-    $alunoService = new alunoService($conexao,$student);
+    $alunoService = new alunoService($conexao,$students);
     if($alunoService->atualizar()){
-        header('location: alunos.php');
-    }
+        header('location: ../alunos.php?recuperar');
+    }  
 }
 
 else if($acao == 'remover'){
@@ -76,7 +77,7 @@ else if($acao == 'remover'){
     $alunoService = new alunoService($conexao,$student);
     $alunoService->remover();
 
-    header('location: alunos.php');
+    header('location: alunos.php?recuperar');
 }
 
 

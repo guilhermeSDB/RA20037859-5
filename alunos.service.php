@@ -51,19 +51,35 @@ class alunoService{
     }
 
     
-    public function atualizar(){ // UPDATE
-        $query = "UPDATE students SET nome = :nome, email = :email, password = :password, phone = :phone, course = :course, status = :status, updated_at = now() where id = :id";
-        $stmt = $this->conexao->prepare($query);
-        $stmt->bindValue(':nome', $this->student->__get('name'));
+    public function atualizar() { // UPDATE
+        
+
+        $query ="
+                UPDATE  
+                    students 
+                SET 
+                    name = :nome,
+                    email = :email,
+                    password = :senha,
+                    phone = :phone,
+                    course = :curso,
+                    status = :status,
+                    updated_at = NOW()
+                WHERE 
+                    id = :id
+                ";
+        $stmt = $this->conexao->prepare($query);        
         $stmt->bindValue(':id', $this->student->__get('id'));
+        $stmt->bindValue(':nome', $this->student->__get('name'));
         $stmt->bindValue(':email', $this->student->__get('email'));
-        $stmt->bindValue(':password', $this->student->__get('password'));
+        $stmt->bindValue(':senha', $this->student->__get('password'));
         $stmt->bindValue(':phone', $this->student->__get('phone'));
-        $stmt->bindValue(':course', $this->student->__get('course'));
+        $stmt->bindValue(':curso', $this->student->__get('course'));
         $stmt->bindValue(':status', $this->student->__get('status'));
-        return $stmt->execute();
+        return (bool)$stmt->execute();         
         
     }
+
     
 
     public function remover(){ // DELETE
