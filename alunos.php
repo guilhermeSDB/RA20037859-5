@@ -105,7 +105,7 @@ require "controller/alunos_controller.php";
                             </td>
                             <td>
                               <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalVisualizar<?= $student->id ?>">Visualizar</button>
-                              <button type="button" class="btn btn-warning" onclick="editar(<?= $student->id ?>, '<?= $student->name ?>','<?= $student->email?>','<?=$student->password?>','<?=$student->phone?>','<?=$student->nameCourse?>',<?=$student->status?>)">Editar</button>
+                              <button type="button" class="btn btn-warning" onclick="editar(<?= $student->id ?>, '<?= $student->name ?>','<?= $student->email ?>','<?= $student->password ?>','<?= $student->phone ?>','<?= $student->nameCourse ?>',<?= $student->status ?>)">Editar</button>
                               <button type="button" class="btn btn-danger" onclick="remover(<?= $student->id ?>)">Excluir</button>
                             </td>
                           </tr>
@@ -141,7 +141,7 @@ require "controller/alunos_controller.php";
                                   </div>
                                   <div class="form-group col-md-6">
                                     <label for="telefone">Telefone</label>
-                                    <p><?= $student->phone ?></p>
+                                    <p class="phone-number"><?= $student->phone ?></p>
                                   </div>
                                   <div class="form-group col-md-6">
                                     <label>Curso</label>
@@ -201,7 +201,7 @@ require "controller/alunos_controller.php";
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-          <form id="formId" action="controller/alunos_controller.php?acao=inserir" method="POST">
+          <form class="needs-validation" id="formId" action="controller/alunos_controller.php?acao=inserir" method="POST" novalidate>
             <div class="modal-header bg-info" id="modal-color">
               <h5 class="modal-title" id="exampleModalLabel">Adicionar Aluno</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -210,34 +210,53 @@ require "controller/alunos_controller.php";
             </div>
             <div class="modal-body">
               <div class="form-group">
-                <input name="id" type="hidden" class="form-control" id="id" placeholder="Digite o nome do Aluno">
+                <input name="id" type="hidden" class="form-control" id="id" placeholder="Digite o nome do Aluno" required>
               </div>
               <div class="form-group">
-                <label for="nome">Nome</label>
-                <input name="nome" type="text" class="form-control" id="nome" placeholder="Digite o nome do Aluno">
+                <label for="nome" class="form-label">*Nome (Min 6 caracteres)</label>
+                <input name="nome" type="text" class="form-control" id="nome" placeholder="Digite o nome do Aluno" minlength="6" required>
+                <div class="invalid-feedback">
+                  Digite o nome do aluno!
+                </div>
               </div>
               <div class="form-group">
-                <label for="email">Email</label>
-
-                <input name="email" type="text" class="form-control" id="email" placeholder="Digite o email do Aluno">
+                <label for="email">*Email</label>
+                <input name="email" type="text" class="form-control" id="email" placeholder="Ex: email@example.com" required>
+                <div class="invalid-feedback">
+                  Email no formato errado!
+                </div>
               </div>
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label for="senha">Senha</label>
-                  <input name="senha" type="password" class="form-control" id="senha" placeholder="Digite a senha do Aluno">
+                  <label for="senha">*Senha (Max 10 caracteres) </label>
+                  <input name="senha" type="password" class="form-control" id="senha" placeholder="Digite a senha do Aluno" maxlength="10" required>
+                  <div class="invalid-feedback" id="messagePassword">
+                    Voce não digitou a senha!
+
+                  </div>
+                  <span id='message'></span>
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="senha">Confirmar Senha</label>
-                  <input type="password" class="form-control" id="confirmSenha" placeholder="Confirme a senha do Aluno">
+                  <label for="senha">*Confirmar Senha (Max 10 caracteres)</label>
+                  <input type="password" class="form-control" id="confirmSenha" placeholder="Confirme a senha do Aluno" maxlength="10" required>
+                  <div class="invalid-feedback" id="messagePassword">
+                    Voce não Confirmou a senha!
+
+                  </div>
+                  <span id='message'></span>
                 </div>
                 <div class="form-group col-md-12">
-                  <label for="telefone">Telefone</label>
-                  <input name="telefone" type="number" class="form-control" id="telefone" placeholder="Ex: (19) 99999-9999">
+                  <label for="telefone">*Telefone</label>
+                  <input name="telefone" type="text" class="form-control phone-number" id="telefone" placeholder="Ex: (19) 99999-9999" maxlength="16" required>
+                  <div class="invalid-feedback">
+                    Digite o Telefone!
+                  </div>
                 </div>
               </div>
               <div class="form-group">
-                <label>Selecione o Curso</label>
-                <select name="curso" class="form-control">
+                <label for="validationTooltip04" class="form-label">*Selecione o Curso</label>
+                <select name="curso" class="form-control" id="validationTooltip04" required>
+                  <option selected disabled value="">Escolha um curso...</option>
 
                   <?php foreach ($cursos as $indice => $curso) { ?>
 
@@ -246,13 +265,20 @@ require "controller/alunos_controller.php";
                   <?php } ?>
 
                 </select>
+                <div class="invalid-feedback">
+                  Escolha uma opção!
+                </div>
               </div>
               <div class="form-group">
-                <label>Selecione o Status</label>
-                <select name="status" class="form-control">
+                <label for="validationTooltip05" class="form-label">*Selecione o Status</label>
+                <select name="status" class="form-control" id="validationTooltip05" required>
+                  <option selected disabled value="">Escolha o status...</option>
                   <option value="1">Ativo</option>
                   <option value="0">Inativo</option>
                 </select>
+                <div class="invalid-feedback">
+                  Escolha uma opção!
+                </div>
               </div>
             </div>
             <div class="modal-footer">
@@ -286,13 +312,45 @@ require "controller/alunos_controller.php";
   <!-- jQuery UI 1.11.4 -->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
   <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
   <script defer>
+    $('#senha, #confirmSenha').on('keyup', function() {
+      if ($('#senha').val() == $('#confirmSenha').val()) {
+        $('#message').html('As senhas são iguais').css('color', 'green');
+      } else
+        $('#message').html('As senhas não conferem!').css('color', 'red');
+    });
+
+    (function() {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function(form) {
+          form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+
+    $(document).ready(function() {
+      $('.phone-number').mask('(00) 00000-0000')
+    })
+
     function remover(id) {
       location.href = 'alunos.php?acao=remover&id=' + id;
     }
 
-    function editar(id,name,email,password,phone,status,created_at) {
+    function editar(id, name, email, password, phone, status, created_at) {
       $("#exampleModal").modal({
         show: true
       });
@@ -304,10 +362,10 @@ require "controller/alunos_controller.php";
       $('#formId').attr('action', 'controller/alunos_controller.php?acao=atualizar');
       $('#formId').attr('method', 'POST');
       $("#id").attr('value', +id)
-      $("#nome").attr('value', name )
+      $("#nome").attr('value', name)
       $("#email").attr('value', email)
       $("#senha").attr('value', password)
-      $("#telefone").attr('value', +phone)
+      $("#telefone").attr('value', phone)
       $("#status").attr('value', +status)
     }
 

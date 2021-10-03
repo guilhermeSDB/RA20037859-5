@@ -15,13 +15,6 @@ require "controller/courses_controller.php";
   <!-- Tempus Dominus Styles -->
   <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
   <?php include("pages/imports.php"); ?>
-
-  <script>
-    function remover(id) {
-      location.href = 'courses.php?acao=remover&id=' + id;
-    }
-  </script>
-
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -59,7 +52,7 @@ require "controller/courses_controller.php";
             <div class="col-12">
               <div class="card">
                 <div class="card-header d-md-flex justify-content-md-end">
-                  <button type="button" class="btn btn-flat btn-info" data-toggle="modal" data-target="#exampleModal">Novo Curso</button>
+                  <button id="novoCurso" type="button" class="btn btn-flat btn-info" data-toggle="modal" data-target="#modalADD_EDIT">Novo Curso</button>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -87,12 +80,63 @@ require "controller/courses_controller.php";
                                 echo "Inativo";
                               } ?></td>
                           <td>
-                            <button type="button" class="btn btn-info">Visualizar</button>
-                            <button type="button" class="btn btn-warning">Editar</button>
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalVisualizar<?= $course->id ?>">Visualizar</button>
+                            <button type="button" class="btn btn-warning" onclick="editar(<?= $course->id ?>, '<?= $course->nameCourse ?>','<?= $course->description ?>',<?= $course->status ?>,'<?= $course->dateStart ?>','<?= $course->dateFinish ?>')">Editar</button>
                             <button type="button" class="btn btn-danger" onclick="remover(<?= $course->id ?>)">Excluir</button>
                           </td>
                         </tr>
                       </tbody>
+
+                      <div class="modal fade" id="modalVisualizar<?= $course->id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header bg-info">
+                              <h5 class="modal-title" id="modalVisualizar">Visualizar Aluno</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="form-group">
+                                <label>ID</label>
+                                <p><?= $course->id; ?></p>
+                              </div>
+                              <div class="row">
+                                <div class="form-group col-md-6">
+                                  <label>Nome do Curso</label>
+                                  <p><?= $course->nameCourse; ?></p>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label>Status:</label>
+                                  <p><?= $course->status ?></p>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="email">Descrição:</label>
+                                  <p><?= $course->description ?></p>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="form-group col-md-6">
+                                  <label for="telefone">Data de Inicio</label>
+                                  <p><?= $course->dateStart ?></p>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label>Data do Fim</label>
+                                  <p><?= $course->dateFinish ?></p>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label>Criado em:</label>
+                                  <p><?= $course->created_at ?></p>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label>Atualizado em:</label>
+                                  <p><?= $course->updated_at ?></p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
                     <?php } ?>
 
@@ -122,12 +166,12 @@ require "controller/courses_controller.php";
     </div>
     <!-- /.content-wrapper -->
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="0" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 1400;">
+    <!-- Modal Adicionar/Editar-->
+    <div class="modal fade" id="modalADD_EDIT" tabindex="0" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 1400;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-          <form class="needs-validation" action="controller/courses_controller.php?acao=inserir" method="POST" novalidate>
-            <div class="modal-header bg-info">
+          <form class="needs-validation" id="formId" action="controller/courses_controller.php?acao=inserir" method="POST" novalidate>
+            <div class="modal-header bg-info" id="modal-color">
               <h5 class="modal-title" id="exampleModalLabel">Adicionar Curso</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -135,28 +179,38 @@ require "controller/courses_controller.php";
             </div>
             <div class="modal-body">
               <div class="form-group">
-                <label for="validationTooltip01">Nome</label>
-                <input name="nome" type="text" class="form-control" id="validationTooltip01" placeholder="Digite o nome do curso">
-                <div class="valid-tooltip">
-                  Looks good!
-                </div>
+                <input name="id" type="hidden" class="form-control" id="id" placeholder="" required>
               </div>
               <div class="form-group">
+                <label for="validationTooltip01">Nome</label>
+                <input name="nome" type="text" class="form-control" id="nome" placeholder="Digite o nome do curso" required>
+                <div class="invalid-feedback">
+                  Digite o nome do Curso!
+                </div>
+              </div>
+              <div class="mb-3">
                 <label>Selecione o Status</label>
-                <select name="status" class="form-control">
+                <select name="status" class="form-control" required>
+                  <option selected disabled value="">Escolha uma opção...</option>
                   <option value="1">Ativo</option>
                   <option value="0">Inativo</option>
                 </select>
+                <div class="invalid-feedback">
+                  Escolha uma opção!
+                </div>
               </div>
               <div class="form-group">
                 <label for="text-area" class="form-label">Descricao</label>
-                <textarea name="descricao" class="form-control" id="text-area" rows="3" placeholder="Descrição do Curso"></textarea>
+                <textarea name="descricao" class="form-control" id="description" rows="3" placeholder="Descrição do Curso" required></textarea>
+                <div class="invalid-feedback">
+                  Digite a descrição do Curso!
+                </div>
               </div>
               <div class="row">
                 <div class="col-md-6">
                   <label for="reservationdate" class="form-label">Data de inicio</label>
                   <div class="input-group date" id="reservationdate">
-                    <input name="dateStart" type="date" class="form-control"/>
+                    <input name="dateStart" type="date" class="form-control" />
 
                   </div>
                 </div>
@@ -164,7 +218,7 @@ require "controller/courses_controller.php";
                 <div class="col-md-6">
                   <label for="reservationdate2" class="form-label">Data do Fim</label>
                   <div class="input-group date" id="reservationdate2">
-                    <input name="dateFinish" type="date" class="form-control"/>                    
+                    <input name="dateFinish" type="date" class="form-control" />
                   </div>
                 </div>
               </div>
@@ -172,13 +226,12 @@ require "controller/courses_controller.php";
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-success">Salvar</button>
+              <button id="button-action" type="submit" class="btn btn-success">Salvar</button>
             </div>
           </form>
         </div>
       </div>
     </div>
-
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -189,29 +242,78 @@ require "controller/courses_controller.php";
   <!-- ./wrapper -->
 
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
-  <script src="plugins/jquery/jquery.min.js"></script>
-  <script src="plugins/moment/moment.min.js"></script>
+  <script>
+    (function() {
+      'use strict'
 
-  <!-- Tempusdominus Bootstrap 4 -->
-  <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
 
-  <script type="text/javascript">
-    $('#reservationdate').datetimepicker({
-      format: 'L'
-    });
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function(form) {
+          form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
 
-    $('#reservationdate2').datetimepicker({
-      format: 'R'
-    });
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
 
+    function remover(id) {
+      location.href = 'courses.php?acao=remover&id=' + id;
+    }
+
+
+    function editar(id, nameCourse, description, status, dateStart, dateFinish) {
+      console.log(id, nameCourse, description, status, dateStart, dateFinish)
+      $("#modalADD_EDIT").modal({
+        show: true
+      });
+
+      /*
+      $("#button-action").html("Atualizar");
+      $("#modalADD_EDIT").html("Editar Curso");
+      $("#modal-color").removeClass("bg-info");
+      $("#modal-color").addClass("bg-warning");
+
+      */
+      $('#formId').attr('action', 'controller/courses_controller.php?acao=atualizar');
+      $('#formId').attr('method', 'POST');
+      $("#id").attr('value', +id)
+      $("#nome").attr('value', nameCourse)
+      $("#description").val(description)
+      $("#dateStart").val(+dateStart)
+      $("#dateFinish").attr('value', +dateFinish)
+    }
+
+
+    $("#novoCurso").click(function() {
+      $("#button-action").html("Salvar");
+      $("#exampleModalLabel").html("Adicionar Aluno");
+      $("#modal-color").removeClass("bg-warning");
+      $("#modal-color").addClass("bg-info");
+      $('#formId').attr('action', 'controller/courses_controller.php?acao=inserir');
+      $("#nome").val('');
+      $("#description").val('');
+      $("#status").val('');
+      $("#dateStart").val('');
+      $("#dateFinish").val('');
+
+    })
   </script>
 
-
-  <!-- jQuery -->
-
-  <!-- jQuery UI 1.11.4 -->
-  <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
   <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
   <script>
     $.widget.bridge('uibutton', $.ui.button)
