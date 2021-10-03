@@ -40,23 +40,27 @@ if( $acao == 'inserir'){
     $cursos = $alunoService->recuperarCourse();
     $rowsNumber = $alunoService->recuperarRowsAlunos();
 
-}/*else if($acao == 'atualizar'){
-    require "conexao.php";
-    require "models/Students.php";
-    require "alunos.service.php";
+}else if($acao == 'atualizar'){
+    require "../conexao.php";
+    require "../models/Students.php";
+    require "../alunos.service.php";
 
     $student = new Students();
-    $student->__set('id', $_POST['id'])
-            ->__set('student', $_POST['student']);
+    $conexao = new conexao();
 
-    $conexao = new Conexao();
+    $student->__set('id', $_POST['id']);
+    $student->__set('name', $_POST['nome']);    
+    $student->__set('email', $_POST['email']);    
+    $student->__set('password', $_POST['senha']);    
+    $student->__set('phone', $_POST['telefone']);  
+    $student->__set('course', $_POST['curso']);    
+    $student->__set('status', $_POST['status']);    
 
     $alunoService = new alunoService($conexao,$student);
     if($alunoService->atualizar()){
         header('location: alunos.php');
     }
 }
-*/
 
 else if($acao == 'remover'){
 

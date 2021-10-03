@@ -50,14 +50,21 @@ class alunoService{
         return $count;
     }
 
-    /*
+    
     public function atualizar(){ // UPDATE
-        $query = "UPDATE students SET nome = ? where id = ?";
+        $query = "UPDATE students SET nome = :nome, email = :email, password = :password, phone = :phone, course = :course, status = :status, updated_at = now() where id = :id";
         $stmt = $this->conexao->prepare($query);
-        $stmt = $this->bindValue(1, $this->student->__get('nome'));
+        $stmt->bindValue(':nome', $this->student->__get('name'));
+        $stmt->bindValue(':id', $this->student->__get('id'));
+        $stmt->bindValue(':email', $this->student->__get('email'));
+        $stmt->bindValue(':password', $this->student->__get('password'));
+        $stmt->bindValue(':phone', $this->student->__get('phone'));
+        $stmt->bindValue(':course', $this->student->__get('course'));
+        $stmt->bindValue(':status', $this->student->__get('status'));
+        return $stmt->execute();
         
     }
-    */
+    
 
     public function remover(){ // DELETE
         $query = 'DELETE FROM students where id = :id';

@@ -57,7 +57,7 @@ require "controller/alunos_controller.php";
             <div class="col-12">
               <div class="card">
                 <div class="card-header d-md-flex justify-content-md-end">
-                  <button type="button" id="novoAluno" class="btn btn-flat btn-info" data-toggle="modal" data-target="#exampleModal">Novo Aluno</button>
+                  <button type="submit" id="novoAluno" class="btn btn-flat btn-info" data-toggle="modal" data-target="#exampleModal">Novo Aluno</button>
                 </div>
 
                 <!--<?php if (isset($_GET['inclusao']) && $_GET['inclusao'] == 1) { ?>
@@ -83,153 +83,91 @@ require "controller/alunos_controller.php";
                       </tr>
                     </thead>
 
-                    <?php foreach ($students as $indice => $student) { ?>
+                    <?php foreach ($students as $indice => $student) {
 
-                      <tbody>
-                        <tr>
-                          <td><?= $student->id ?></td>
-                          <td><?= $student->name ?></td>
-                          <td><?= $student->email ?></td>
-                          <td><?= $student->phone ?></td>
-                          <td><?= $student->nameCourse ?></td>
-                          <td>
-                            <?php if ($student->status == '1') {
-                              echo "Ativo";
-                            } else {
-                              echo "Inativo";
-                            } ?>
-                          </td>
-                          <td>
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalVisualizar<?= $student->id ?>">Visualizar</button>
-                            <button type="button" class="btn btn-warning" onclick="editar(<?= $student->id ?>)">Editar</button>
-                            <button type="button" class="btn btn-danger" onclick="remover(<?= $student->id ?>)">Excluir</button>
-                          </td>
-                        </tr>
-                      </tbody>
+                      if (!$student == null) {
 
-                      <!------------------------ Modal Visualizar Alunos ---------------------------->
-                      <div class="modal fade" id="modalVisualizar<?= $student->id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header bg-info">
-                              <h5 class="modal-title" id="modalVisualizar">Visualizar Aluno</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="form-group">
-                                <label>ID</label>
-                                <p><?= $student->id; ?></p>
-                              </div>
-                              <div class="row">
-                                <div class="form-group col-md-6">
-                                  <label>Nome</label>
-                                  <p><?= $student->name; ?></p>
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="email">Email:</label>
-                                  <p><?= $student->email ?></p>
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="senha">Senha</label>
-                                  <p><?= $student->password ?></p>
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="telefone">Telefone</label>
-                                  <p><?= $student->phone ?></p>
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label>Curso</label>
-                                  <p><?= $student->nameCourse ?></p>
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label>Status:</label>
-                                  <p><?= $student->status ?></p>
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label>Criado em:</label>
-                                  <p><?= $student->created_at ?></p>
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label>Atualizado em:</label>
-                                  <p><?= $student->updated_at ?></p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    ?>
 
+                        <tbody>
+                          <tr>
+                            <td><?= $student->id ?></td>
+                            <td><?= $student->name ?></td>
+                            <td><?= $student->email ?></td>
+                            <td><?= $student->phone ?></td>
+                            <td><?= $student->nameCourse ?></td>
+                            <td>
+                              <?php if ($student->status == '1') {
+                                echo "Ativo";
+                              } else {
+                                echo "Inativo";
+                              } ?>
+                            </td>
+                            <td>
+                              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalVisualizar<?= $student->id ?>">Visualizar</button>
+                              <button type="button" class="btn btn-warning" onclick="editar(<?= $student->id ?>)">Editar</button>
+                              <button type="button" class="btn btn-danger" onclick="remover(<?= $student->id ?>)">Excluir</button>
+                            </td>
+                          </tr>
+                        </tbody>
 
-
-                      <!-- Modal Adicionar/Editar Alunos-->
-                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                          <div class="modal-content">
-                            <form id="formId" action="controller/alunos_controller.php?acao=inserir" method="POST">
-                              <div class="modal-header bg-info" id="modal-color">
-                                <h5 class="modal-title" id="exampleModalLabel">Adicionar Aluno</h5>
+                        <!------------------------ Modal Visualizar Alunos ---------------------------->
+                        <div class="modal fade" id="modalVisualizar<?= $student->id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header bg-info">
+                                <h5 class="modal-title" id="modalVisualizar">Visualizar Aluno</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
                               </div>
                               <div class="modal-body">
                                 <div class="form-group">
-                                  <label for="nome">Nome</label>
-                                  <input name="nome" type="text" class="form-control" id="nome" placeholder="Digite o nome do Aluno" value="">
-                                </div>
-                                <div class="form-group">
-                                  <label for="email">Email</label>
-
-                                  <input name="email" type="text" class="form-control" id="email" placeholder="Digite o email do Aluno" value="<?= $student->email ?>">
+                                  <label>ID</label>
+                                  <p><?= $student->id; ?></p>
                                 </div>
                                 <div class="row">
                                   <div class="form-group col-md-6">
-                                    <label for="senha">Senha</label>
-                                    <input name="senha" type="password" class="form-control" id="senha" placeholder="Digite a senha do Aluno" value="<?= $student->password ?>">
+                                    <label>Nome</label>
+                                    <p><?= $student->name; ?></p>
                                   </div>
                                   <div class="form-group col-md-6">
-                                    <label for="senha">Confirmar Senha</label>
-                                    <input type="password" class="form-control" id="confirmSenha" placeholder="Confirme a senha do Aluno">
+                                    <label for="email">Email:</label>
+                                    <p><?= $student->email ?></p>
                                   </div>
-                                  <div class="form-group col-md-12">
+                                  <div class="form-group col-md-6">
+                                    <label for="senha">Senha</label>
+                                    <p><?= $student->password ?></p>
+                                  </div>
+                                  <div class="form-group col-md-6">
                                     <label for="telefone">Telefone</label>
-                                    <input name="telefone" type="number" class="form-control" id="telefone" placeholder="Ex: (19) 99999-9999" value="<?= $student->phone ?>">
+                                    <p><?= $student->phone ?></p>
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label>Curso</label>
+                                    <p><?= $student->nameCourse ?></p>
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label>Status:</label>
+                                    <p><?= $student->status ?></p>
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label>Criado em:</label>
+                                    <p><?= $student->created_at ?></p>
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label>Atualizado em:</label>
+                                    <p><?= $student->updated_at ?></p>
                                   </div>
                                 </div>
-                                <div class="form-group">
-                                  <label>Selecione o Curso</label>
-                                  <select name="curso" class="form-control">
-
-                                    <?php foreach ($cursos as $indice => $curso) { ?>
-
-                                      <option value="<?= $curso->id ?>"><?= $curso->nameCourse ?></option>
-
-                                    <?php } ?>
-
-                                  </select>
-                                </div>
-                                <div class="form-group">
-                                  <label>Selecione o Status</label>
-                                  <select name="status" class="form-control" value="<?= $student->status ?>">
-                                    <option value="1">Ativo</option>
-                                    <option value="0">Inativo</option>
-                                  </select>
-                                </div>
                               </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                <button id="button-action" type="submit" class="btn btn-success">Salvar</button>
-                              </div>
-                            </form>
+                            </div>
                           </div>
                         </div>
-                      </div>
-
-
-
-                    <?php } ?>
+                    <?php } else {
+                        #exampleModal
+                      }
+                    } ?>
 
                     <tfoot>
                       <tr>
@@ -259,7 +197,72 @@ require "controller/alunos_controller.php";
 
     </div>
     <!-- /.content-wrapper -->
+    <!-- Modal Adicionar/Editar Alunos-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <form id="formId" action="controller/alunos_controller.php?acao=inserir" method="POST">
+            <div class="modal-header bg-info" id="modal-color">
+              <h5 class="modal-title" id="exampleModalLabel">Adicionar Aluno</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <input name="id" type="hidden" class="form-control" id="id" placeholder="Digite o nome do Aluno">
+              </div>
+              <div class="form-group">
+                <label for="nome">Nome</label>
+                <input name="nome" type="text" class="form-control" id="nome" placeholder="Digite o nome do Aluno">
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
 
+                <input name="email" type="text" class="form-control" id="email" placeholder="Digite o email do Aluno">
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="senha">Senha</label>
+                  <input name="senha" type="password" class="form-control" id="senha" placeholder="Digite a senha do Aluno">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="senha">Confirmar Senha</label>
+                  <input type="password" class="form-control" id="confirmSenha" placeholder="Confirme a senha do Aluno">
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="telefone">Telefone</label>
+                  <input name="telefone" type="number" class="form-control" id="telefone" placeholder="Ex: (19) 99999-9999">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Selecione o Curso</label>
+                <select name="curso" class="form-control">
+
+                  <?php foreach ($cursos as $indice => $curso) { ?>
+
+                    <option value="<?= $curso->id ?>"><?= $curso->nameCourse ?></option>
+
+                  <?php } ?>
+
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Selecione o Status</label>
+                <select name="status" class="form-control">
+                  <option value="1">Ativo</option>
+                  <option value="0">Inativo</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              <button id="button-action" type="submit" class="btn btn-success">Salvar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
 
 
@@ -270,6 +273,11 @@ require "controller/alunos_controller.php";
     <!-- /.control-sidebar -->
   </div>
   <!-- ./wrapper -->
+
+  <?php
+
+
+  ?>
 
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -294,11 +302,12 @@ require "controller/alunos_controller.php";
       $("#modal-color").removeClass("bg-info");
       $("#modal-color").addClass("bg-warning");
       $('#formId').attr('action', 'controller/alunos_controller.php?acao=atualizar');
-      $("#nome").attr('value','<?= $student->name ?>')
-      $("#email").attr('value','<?= $student->email ?>')
-      $("#senha").attr('value','<?= $student->password ?>')
-      $("#telefone").attr('value','<?= $student->phone ?>')
-      $("#status").attr('value','<?= $student->status ?>')
+      $("#id").attr('value', +id)
+      $("#nome").attr('value', '<?= $student->name ?>')
+      $("#email").attr('value', '<?= $student->email ?>')
+      $("#senha").attr('value', '<?= $student->password ?>')
+      $("#telefone").attr('value', '<?= $student->phone ?>')
+      $("#status").attr('value', '<?= $student->status ?>')
     }
 
     $("#novoAluno").click(function() {
@@ -307,12 +316,12 @@ require "controller/alunos_controller.php";
       $("#modal-color").removeClass("bg-warning");
       $("#modal-color").addClass("bg-info");
       $('#formId').attr('action', 'controller/alunos_controller.php?acao=inserir');
-      $("#nome").val(null);
-      $("#email").val(null);
-      $("#senha").val(null);
-      $("#telefone").val(null);
-      $("#status").val(null);
-      
+      $("#nome").val('');
+      $("#email").val('');
+      $("#senha").val('');
+      $("#telefone").val('');
+      $("#status").val('');
+
     })
 
     <?php if (isset($_GET['inclusao'])) {
