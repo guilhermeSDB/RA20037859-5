@@ -1,7 +1,7 @@
 <?php
 
 $acao = 'recuperar';
-require "controller/courses_controller.php";
+require "../controller/courses_controller.php";
 
 ?>
 
@@ -13,8 +13,8 @@ require "controller/courses_controller.php";
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Painel ADM | Cursos</title>
   <!-- Tempus Dominus Styles -->
-  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <?php include("pages/imports.php"); ?>
+  <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <?php include("../pages/imports.php"); ?>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -22,10 +22,10 @@ require "controller/courses_controller.php";
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-      <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+      <img class="animation__shake" src="../dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
     </div>
 
-    <?php include("pages/menu-navbar.php"); ?>
+    <?php include("../pages/menu-navbar.php"); ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -38,7 +38,7 @@ require "controller/courses_controller.php";
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.php">Home</a></li>
                 <li class="breadcrumb-item active">Cursos</li>
               </ol>
             </div><!-- /.col -->
@@ -170,9 +170,9 @@ require "controller/courses_controller.php";
     <div class="modal fade" id="modalADD_EDIT" tabindex="0" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 1400;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-          <form class="needs-validation" id="formId" action="controller/courses_controller.php?acao=inserir" method="POST" novalidate>
+          <form class="needs-validation" id="formId" action="../controller/courses_controller.php?acao=inserir" method="POST" novalidate>
             <div class="modal-header bg-info" id="modal-color">
-              <h5 class="modal-title" id="exampleModalLabel">Adicionar Curso</h5>
+              <h5 class="modal-title" id="ModalLabel">Adicionar Curso</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -282,14 +282,11 @@ require "controller/courses_controller.php";
         show: true
       });
 
-      /*
       $("#button-action").html("Atualizar");
-      $("#modalADD_EDIT").html("Editar Curso");
+      $("#ModalLabel").html("Editar Curso");
       $("#modal-color").removeClass("bg-info");
       $("#modal-color").addClass("bg-warning");
-
-      */
-      $('#formId').attr('action', 'controller/courses_controller.php?acao=atualizar');
+      $('#formId').attr('action', '../controller/courses_controller.php?acao=atualizar');
       $('#formId').attr('method', 'POST');
       $("#id").attr('value', +id)
       $("#nome").attr('value', nameCourse)
@@ -304,7 +301,7 @@ require "controller/courses_controller.php";
       $("#exampleModalLabel").html("Adicionar Aluno");
       $("#modal-color").removeClass("bg-warning");
       $("#modal-color").addClass("bg-info");
-      $('#formId').attr('action', 'controller/courses_controller.php?acao=inserir');
+      $('#formId').attr('action', '../controller/courses_controller.php?acao=inserir');
       $("#nome").val('');
       $("#description").val('');
       $("#status").val('');
@@ -319,29 +316,29 @@ require "controller/courses_controller.php";
     $.widget.bridge('uibutton', $.ui.button)
   </script>
   <!-- Bootstrap 4 -->
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- ChartJS -->
-  <script src="plugins/chart.js/Chart.min.js"></script>
+  <script src="../plugins/chart.js/Chart.min.js"></script>
   <!-- Sparkline -->
-  <script src="plugins/sparklines/sparkline.js"></script>
+  <script src="../plugins/sparklines/sparkline.js"></script>
   <!-- JQVMap -->
-  <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
-  <script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+  <script src="../plugins/jqvmap/jquery.vmap.min.js"></script>
+  <script src="../plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
   <!-- jQuery Knob Chart -->
-  <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+  <script src="../plugins/jquery-knob/jquery.knob.min.js"></script>
   <!-- daterangepicker -->
-  <script src="plugins/moment/moment.min.js"></script>
-  <script src="plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="../plugins/moment/moment.min.js"></script>
+  <script src="../plugins/daterangepicker/daterangepicker.js"></script>
   <!-- Summernote -->
-  <script src="plugins/summernote/summernote-bs4.min.js"></script>
+  <script src="../plugins/summernote/summernote-bs4.min.js"></script>
   <!-- overlayScrollbars -->
-  <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
   <!-- AdminLTE App -->
-  <script src="dist/js/adminlte.js"></script>
+  <script src="../dist/js/adminlte.js"></script>
   <!-- AdminLTE for demo purposes -->
-  <script src="dist/js/demo.js"></script>
+  <script src="../dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="dist/js/pages/dashboard.js"></script>
+  <script src="../dist/js/pages/dashboard.js"></script>
 </body>
 
 </html>

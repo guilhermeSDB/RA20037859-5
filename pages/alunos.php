@@ -1,7 +1,7 @@
 <?php
 
 $acao = 'recuperar';
-require "controller/alunos_controller.php";
+require "../controller/alunos_controller.php";
 
 //echo '<pre>';
 //print_r($students);
@@ -17,7 +17,7 @@ require "controller/alunos_controller.php";
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Painel ADM | Alunos</title>
 
-  <?php include("pages/imports.php"); ?>
+  <?php include("imports.php"); ?>
 
 </head>
 
@@ -26,10 +26,10 @@ require "controller/alunos_controller.php";
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-      <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+      <img class="animation__shake" src="../dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
     </div>
 
-    <?php include("pages/menu-navbar.php"); ?>
+    <?php include("menu-navbar.php"); ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -359,7 +359,7 @@ require "controller/alunos_controller.php";
       $("#exampleModalLabel").html("Editar Aluno");
       $("#modal-color").removeClass("bg-info");
       $("#modal-color").addClass("bg-warning");
-      $('#formId').attr('action', 'controller/alunos_controller.php?acao=atualizar');
+      $('#formId').attr('action', '../controller/alunos_controller.php?acao=atualizar');
       $('#formId').attr('method', 'POST');
       $("#id").attr('value', +id)
       $("#nome").attr('value', name)
@@ -374,7 +374,7 @@ require "controller/alunos_controller.php";
       $("#exampleModalLabel").html("Adicionar Aluno");
       $("#modal-color").removeClass("bg-warning");
       $("#modal-color").addClass("bg-info");
-      $('#formId').attr('action', 'controller/alunos_controller.php?acao=inserir');
+      $('#formId').attr('action', '../controller/alunos_controller.php?acao=inserir');
       $("#nome").val('');
       $("#email").val('');
       $("#senha").val('');
@@ -407,29 +407,29 @@ require "controller/alunos_controller.php";
     $.widget.bridge('uibutton', $.ui.button)
   </script>
   <!-- Bootstrap 4 -->
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- ChartJS -->
-  <script src="plugins/chart.js/Chart.min.js"></script>
+  <script src="../plugins/chart.js/Chart.min.js"></script>
   <!-- Sparkline -->
-  <script src="plugins/sparklines/sparkline.js"></script>
+  <script src="../plugins/sparklines/sparkline.js"></script>
 
   <!-- jQuery Knob Chart -->
-  <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+  <script src="../plugins/jquery-knob/jquery.knob.min.js"></script>
   <!-- daterangepicker -->
-  <script src="plugins/moment/moment.min.js"></script>
-  <script src="plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="../plugins/moment/moment.min.js"></script>
+  <script src="../plugins/daterangepicker/daterangepicker.js"></script>
   <!-- Tempusdominus Bootstrap 4 -->
-  <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
   <!-- Summernote -->
-  <script src="plugins/summernote/summernote-bs4.min.js"></script>
+  <script src="../plugins/summernote/summernote-bs4.min.js"></script>
   <!-- overlayScrollbars -->
-  <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
   <!-- AdminLTE App -->
-  <script src="dist/js/adminlte.js"></script>
+  <script src="../dist/js/adminlte.js"></script>
   <!-- AdminLTE for demo purposes -->
-  <script src="dist/js/demo.js"></script>
+  <script src="../dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="dist/js/pages/dashboard.js"></script>
+  <script src="../dist/js/pages/dashboard.js"></script>
 </body>
 
 </html>

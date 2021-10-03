@@ -3,12 +3,17 @@
 
 $acao = isset($_GET['acao']) ? $_GET['acao'] : $acao;
 
-if ($acao == 'inserir') {
-    require "../conexao.php";
+
+function requireFunc()
+{
+    require "../models/conexao.php";
     require "../models/Courses.php";
-    require "../courses.service.php";
+    require "courses.service.php";
+}
 
+if ($acao == 'inserir') {
 
+    requireFunc();
 
     $course = new Courses();
     $course->__set('nameCourse', $_POST['nome']);
@@ -22,12 +27,10 @@ if ($acao == 'inserir') {
     $cursoService = new cursoService($conexao, $course);
     $cursoService->inserir();
 
-    header('location: ../courses.php?inclusao=1');
+    header('location: ../pages/courses.php?inclusao=1');
 } else if ($acao == 'atualizar') {
 
-    require "../conexao.php";
-    require "../models/Courses.php";
-    require "../courses.service.php";
+    requireFunc();
 
     $courses = new Courses();
 
@@ -44,12 +47,11 @@ if ($acao == 'inserir') {
 
     $cursoService = new cursoService($conexao, $courses);
     if ($cursoService->atualizar()) {
-        header('location: ../courses.php?recuperar');
+        header('location: ../pages/courses.php?recuperar');
     }
 } else if ($acao == 'recuperar') {
-    require "conexao.php";
-    require "models/Courses.php";
-    require "courses.service.php";
+
+    requireFunc();
 
     $course = new Courses();
     $conexao = new conexao();
@@ -58,9 +60,7 @@ if ($acao == 'inserir') {
     $courses = $cursoService->recuperar();
 } else if ($acao == 'remover') {
 
-    require "conexao.php";
-    require "models/Courses.php";
-    require "courses.service.php";
+    requireFunc();
 
     $courses = new Courses();
     $conexao = new conexao();
@@ -70,5 +70,5 @@ if ($acao == 'inserir') {
     $cursoService = new cursoService($conexao, $courses);
     $cursoService->remover();
 
-    header('location: courses.php');
+    header('location: ../pages/courses.php');
 }

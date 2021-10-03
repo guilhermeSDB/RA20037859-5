@@ -1,13 +1,19 @@
 <?php
 
-
 $acao = isset($_GET['acao']) ? $_GET['acao'] : $acao;
 
 
-if ($acao == 'inserir') {
-    require "../conexao.php";
+function requireFunc()
+{
+    require "../models/conexao.php";
     require "../models/Students.php";
-    require "../alunos.service.php";
+    require "alunos.service.php";
+}
+
+
+if ($acao == 'inserir') {
+
+    requireFunc();
 
     $alunos = new Students();
     $alunos->__set('name', $_POST['id']);
@@ -24,12 +30,10 @@ if ($acao == 'inserir') {
     $alunoService->inserir();
 
 
-    header('location: ../alunos.php?inclusao=1');
+    header('location: ../pages/alunos.php?inclusao=1');
 } else if ($acao == 'recuperar') {
 
-    require "conexao.php";
-    require "models/Students.php";
-    require "alunos.service.php";
+    requireFunc();
 
     $student = new Students();
     $conexao = new conexao();
@@ -40,9 +44,7 @@ if ($acao == 'inserir') {
     $rowsNumber = $alunoService->recuperarRowsAlunos();
 } else if ($acao == 'atualizar') {
 
-    require "../conexao.php";
-    require "../models/Students.php";
-    require "../alunos.service.php";
+    requireFunc();
 
     $students = new Students();
 
@@ -58,13 +60,11 @@ if ($acao == 'inserir') {
 
     $alunoService = new alunoService($conexao, $students);
     if ($alunoService->atualizar()) {
-        header('location: ../alunos.php?recuperar');
+        header('location: ../pages/alunos.php?recuperar');
     }
 } else if ($acao == 'remover') {
 
-    require "conexao.php";
-    require "models/Students.php";
-    require "alunos.service.php";
+    requireFunc();
 
     $student = new Students();
     $conexao = new conexao();
@@ -74,5 +74,5 @@ if ($acao == 'inserir') {
     $alunoService = new alunoService($conexao, $student);
     $alunoService->remover();
 
-    header('location: alunos.php?recuperar');
+    header('location: ../pages/alunos.php?recuperar');
 }
