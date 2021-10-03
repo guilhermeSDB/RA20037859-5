@@ -8,6 +8,8 @@ class Students {
     private $phone = null;
     private $course = null;
     private $status = null;
+    private $created_at = null;
+    private $updated_at = null;
 
     public function __set($atributo, $valor){
         $this->$atributo = $valor;

@@ -12,11 +12,13 @@ class cursoService{
     }
 
     public function inserir(){ // CREATE
-        $query = 'INSERT INTO courses(nameCourse,description,status) values (:nameCourse,:description,:status)';
+        $query = 'INSERT INTO courses(nameCourse,description,status,dateStart,dateFinish,created_at) values (:nameCourse,:description,:status,:dateStart,:dateFinish,now())';
         $stmt = $this->conexao->prepare($query);
         $stmt->bindValue(":nameCourse", $this->course->__get('nameCourse'));
         $stmt->bindValue(':description',$this->course->__get('description'));
         $stmt->bindValue(':status',$this->course->__get('status'));      
+        $stmt->bindValue(':dateStart',$this->course->__get('dateStart'));      
+        $stmt->bindValue(':dateFinish',$this->course->__get('dateFinish'));      
         $stmt->execute();
     }
 
@@ -25,12 +27,11 @@ class cursoService{
         SELECT 
             *
         FROM 
-            courses';    
+            courses
+        ORDER BY id ASC';    
         $stmt = $this->conexao->prepare($query);        
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
-
-        
+        return $stmt->fetchAll(PDO::FETCH_OBJ);       
 
     }
 
@@ -39,7 +40,11 @@ class cursoService{
     }
 
     public function remover(){ // DELETE
-        
+        $query = 'DELETE FROM courses where id = :id';
+        $stmt = $this->conexao->prepare($query);
+        $stmt->bindValue(':id', $this->course->__get('id'));
+        echo $this->course->__get('id');
+        $stmt->execute(); 
     }
 }
 

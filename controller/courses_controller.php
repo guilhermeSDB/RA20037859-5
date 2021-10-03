@@ -8,10 +8,14 @@ if( $acao == 'inserir'){
     require "../models/Courses.php";
     require "../courses.service.php";
 
+    
+
     $course = new Courses();
     $course->__set('nameCourse', $_POST['nome']);
     $course->__set('description', $_POST['descricao']);
     $course->__set('status', $_POST['status']);
+    $course->__set('dateStart', $_POST['dateStart']);
+    $course->__set('dateFinish', $_POST['dateFinish']);
 
     $conexao = new Conexao();
 
@@ -30,6 +34,21 @@ if( $acao == 'inserir'){
     $cursoService = new cursoService($conexao,$course);
     $courses = $cursoService->recuperar();
 
+}else if($acao == 'remover'){
+
+    require "conexao.php";
+    require "models/Courses.php";
+    require "courses.service.php";
+
+    $courses = new Courses();
+    $conexao = new conexao();
+
+    $courses->__set('id', $_GET['id']);
+
+    $cursoService = new cursoService($conexao,$courses);
+    $cursoService->remover();
+
+    header('location: courses.php');
 }
 
 

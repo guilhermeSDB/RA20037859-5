@@ -3,6 +3,7 @@
 
 $acao = isset($_GET['acao']) ? $_GET['acao'] : $acao;
 
+
 if( $acao == 'inserir'){
     require "../conexao.php";
     require "../models/Students.php";
@@ -21,6 +22,7 @@ if( $acao == 'inserir'){
 
     $alunoService = new alunoService($conexao,$alunos);
     $alunoService->inserir();
+
 
     header('location: ../alunos.php?inclusao=1');
 
@@ -54,7 +56,9 @@ if( $acao == 'inserir'){
         header('location: alunos.php');
     }
 }
-*/else if($acao == 'remover'){
+*/
+
+else if($acao == 'remover'){
 
     require "conexao.php";
     require "models/Students.php";

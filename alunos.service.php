@@ -12,7 +12,7 @@ class alunoService{
     }
 
     public function inserir(){ // CREATE
-        $query = 'INSERT INTO students(name,email,password,phone,course,status) values (:nome,:email,:password,:phone,:course,:status)';
+        $query = 'INSERT INTO students(name,email,password,phone,course,status,created_at) values (:nome,:email,:password,:phone,:course,:status,now())';
         $stmt = $this->conexao->prepare($query);
         $stmt->bindValue(":nome", $this->student->__get('name'));
         $stmt->bindValue(':email',$this->student->__get('email'));
@@ -26,7 +26,7 @@ class alunoService{
     public function recuperar(){ // READ
         $query = '
         SELECT 
-            t.id,t.name,t.email,t.password,t.phone,s.nameCourse,t.status 
+            t.id,t.name,t.email,t.password,t.phone,s.nameCourse,t.status,t.created_at,t.updated_at
         FROM 
             students as t
             left join courses as s on (t.course = s.id)
@@ -36,7 +36,6 @@ class alunoService{
         return $stmt->fetchAll(PDO::FETCH_OBJ);        
 
     }
-
     public function recuperarCourse(){
         $query = 'SELECT id,nameCourse FROM courses';
         $stmt = $this->conexao->prepare($query);        
