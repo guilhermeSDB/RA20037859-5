@@ -4,16 +4,12 @@
 $acao = isset($_GET['acao']) ? $_GET['acao'] : $acao;
 
 
-function requireFunc()
-{
-    require "../models/conexao.php";
-    require "../models/Courses.php";
-    require "courses.service.php";
-}
-
 if ($acao == 'inserir') {
 
-    requireFunc();
+
+    require_once "../models/conexao.php";
+    require_once "../models/courses.php";
+    require_once "courses.service.php";
 
     $course = new Courses();
     $course->__set('nameCourse', $_POST['nome']);
@@ -30,7 +26,9 @@ if ($acao == 'inserir') {
     header('location: ../pages/courses.php?inclusao=1');
 } else if ($acao == 'atualizar') {
 
-    requireFunc();
+    require_once "../models/conexao.php";
+    require_once "../models/courses.php";
+    require_once "courses.service.php";
 
     $courses = new Courses();
 
@@ -51,7 +49,9 @@ if ($acao == 'inserir') {
     }
 } else if ($acao == 'recuperar') {
 
-    requireFunc();
+    require_once "../models/conexao.php";
+    require_once "../models/courses.php";
+    require_once "courses.service.php";
 
     $course = new Courses();
     $conexao = new conexao();
@@ -60,7 +60,9 @@ if ($acao == 'inserir') {
     $courses = $cursoService->recuperar();
 } else if ($acao == 'remover') {
 
-    requireFunc();
+    require_once "../models/conexao.php";
+    require_once "../models/courses.php";
+    require_once "courses.service.php";
 
     $courses = new Courses();
     $conexao = new conexao();
