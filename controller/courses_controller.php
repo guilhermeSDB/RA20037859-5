@@ -32,8 +32,6 @@ if ($acao == 'inserir') {
 
     $courses = new Courses();
 
-    var_dump($_POST);
-
     $courses->__set('id', $_POST['id']);
     $courses->__set('nameCourse', $_POST['nome']);
     $courses->__set('description', $_POST['descricao']);

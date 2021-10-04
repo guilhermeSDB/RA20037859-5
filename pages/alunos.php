@@ -221,7 +221,7 @@ require "../controller/alunos_controller.php";
               </div>
               <div class="form-group">
                 <label for="email">*Email</label>
-                <input name="email" type="text" class="form-control" id="email" placeholder="Ex: email@example.com" required>
+                <input name="email" type="email" class="form-control" id="email" placeholder="Ex: email@example.com" required>
                 <div class="invalid-feedback">
                   Email no formato errado!
                 </div>
