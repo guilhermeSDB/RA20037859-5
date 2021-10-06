@@ -1,11 +1,15 @@
  <?php
     $explode = explode('/', $_SERVER['SCRIPT_NAME']);
     $explode = $explode[1];
+    //die(var_dump($explode));
 
     $explode1 = explode('/', $_SERVER['REQUEST_URI']);
     $explode1 = $explode1[2];
 
-    if ($explode == 'index.php' || $explode1 == 'index.php') {
+    $explode2 = explode('/', $_SERVER['SCRIPT_NAME']);
+    $explode2 = $explode2[2];
+
+    if ($explode == 'index.php' || $explode1 == 'index.php' || $explode2 == 'index.php') {
         $home = '<a href="index.php" class="nav-link">';
         $alunos = '<a href="pages/alunos.php" class="nav-link">';
         $aulas = '<a href="pages/courses.php" class="nav-link">';

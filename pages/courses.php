@@ -3,6 +3,8 @@
 $acao = 'recuperar';
 require "../controller/courses_controller.php";
 
+var_dump($courses);
+
 ?>
 
 <!DOCTYPE html>
@@ -81,7 +83,7 @@ require "../controller/courses_controller.php";
                               } ?></td>
                           <td>
                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalVisualizar<?= $course->id ?>">Visualizar</button>
-                            <button type="button" class="btn btn-warning" onclick="editar(<?= $course->id ?>, '<?= $course->nameCourse ?>','<?= $course->description ?>',<?= $course->status ?>,'<?= $course->dateStart ?>','<?= $course->dateFinish ?>')">Editar</button>
+                            <button type="button" class="btn btn-warning editar" onclick="editar(<?= $course->id ?>, '<?= $course->nameCourse ?>','<?= $course->description ?>',<?= $course->status ?>,'<?= $course->dateStart ?>','<?= $course->dateFinish ?>')">Editar</button>
                             <button type="button" class="btn btn-danger" onclick="remover(<?= $course->id ?>)">Excluir</button>
                           </td>
                         </tr>
@@ -275,6 +277,31 @@ require "../controller/courses_controller.php";
       location.href = 'courses.php?acao=remover&id=' + id;
     }
 
+    $('.editar').click(function() {
+      var id = $(this).data('id');
+      $.ajax({
+        type: 'POST',
+        url: '../controller/courses_controller.php',
+        data: {
+          acao = 'dadosCursos',
+          id = id
+        },
+        success: function(cursoAlterado) {
+          var dados = JSON.parse(cursoAlterado);
+          $("#button-action").html("Atualizar");
+          $("#ModalLabel").html("Editar Curso");
+          $("#modal-color").removeClass("bg-info");
+          $("#modal-color").addClass("bg-warning");
+          $('#formId').attr('action', '../controller/courses_controller.php?acao=atualizar');
+          $('#formId').attr('method', 'POST');
+          $("#id").attr('value', +id)
+          $("#nome").attr('value', nameCourse)
+          $("#description").val(description)
+          $("#dateStart").html(dateStart)
+          $("#dateFinish").attr('value', +dateFinish)
+        }
+      })
+    });
 
     function editar(id, nameCourse, description, status, dateStart, dateFinish) {
       console.log(id, nameCourse, description, status, dateStart, dateFinish)
@@ -282,17 +309,7 @@ require "../controller/courses_controller.php";
         show: true
       });
 
-      $("#button-action").html("Atualizar");
-      $("#ModalLabel").html("Editar Curso");
-      $("#modal-color").removeClass("bg-info");
-      $("#modal-color").addClass("bg-warning");
-      $('#formId').attr('action', '../controller/courses_controller.php?acao=atualizar');
-      $('#formId').attr('method', 'POST');
-      $("#id").attr('value', +id)
-      $("#nome").attr('value', nameCourse)
-      $("#description").val(description)
-      $("#dateStart").val(+dateStart)
-      $("#dateFinish").attr('value', +dateFinish)
+
     }
 
 
