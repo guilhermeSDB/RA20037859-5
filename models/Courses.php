@@ -10,6 +10,7 @@ class Courses
     private $status = null;
     private $created_at = null;
     private $updated_at = null;
+    private $resultado = null;
 
     public function __set($atributo, $valor)
     {
@@ -20,5 +21,10 @@ class Courses
     public function __get($atributo)
     {
         return $this->$atributo;
+    }
+
+    public function pegarResultado()
+    {
+        return $this->resultado;
     }
 }

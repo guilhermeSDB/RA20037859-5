@@ -3,7 +3,6 @@
 
 $acao = isset($_GET['acao']) ? $_GET['acao'] : $acao;
 
-
 if ($acao == 'inserir') {
 
 
@@ -71,4 +70,4 @@ if ($acao == 'inserir') {
     $cursoService->remover();
 
     header('location: ../pages/courses.php');
-}
+} 
